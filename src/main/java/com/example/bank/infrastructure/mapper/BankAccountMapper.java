@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 public class BankAccountMapper {
 
     public BankAccount toDomain(BankAccountEntity bankAccountEntity) {
-        return new BankAccount(0, "Default", 0);
+        return new BankAccount(bankAccountEntity.getId(), bankAccountEntity.getAccountHolder(),
+                bankAccountEntity.getBalance());
     }
 
     public BankAccountEntity toEntity(BankAccount bankAccount) {
-        return new BankAccountEntity(0, "Default", 0);
+        return new BankAccountEntity(bankAccount.getId(), bankAccount.getAccountHolder(),
+                bankAccount.getBalance());
     }
 }

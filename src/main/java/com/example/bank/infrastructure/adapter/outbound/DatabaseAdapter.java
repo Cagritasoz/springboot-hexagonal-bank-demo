@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Component //@Component is an annotation that allows Spring to detect our custom beans automatically.
 public class DatabaseAdapter implements BankAccountRepository {
-    private HashMap<Long, BankAccountEntity> accounts;
-    private BankAccountMapper bankAccountMapper;
+    private final HashMap<Long, BankAccountEntity> accounts;
+    private final BankAccountMapper bankAccountMapper;
 
     public DatabaseAdapter(BankAccountMapper bankAccountMapper) {
         accounts = new HashMap<>();
@@ -22,17 +22,36 @@ public class DatabaseAdapter implements BankAccountRepository {
     }
 
     @Override
-    public Optional<BankAccount> findAccountById(long id) {
-        return Optional.of(new BankAccount(0, "Default", 0));
+    public BankAccount findAccountById(long id) {
+        BankAccountEntity bankAccountEntity = accounts.get(id);
+
+        if(bankAccountEntity == null) {
+            return null;
+        }
+
+        return bankAccountMapper.toDomain(bankAccountEntity);
+
     }
 
     @Override
     public void createAccount(BankAccount bankAccount) {
-
+        BankAccountEntity bankAccountEntity = bankAccountMapper.toEntity(bankAccount);
+        if(!accounts.containsKey(bankAccountEntity.getId())) {
+            accounts.put(bankAccountEntity.getId(), bankAccountEntity);
+        }
+        else {
+            throw new IllegalArgumentException("Account already exists!");
+        }
     }
 
     @Override
     public void updateAccount(BankAccount bankAccount) {
-
+        if(accounts.containsKey(bankAccount.getId())) {
+            BankAccountEntity bankAccountEntity = bankAccountMapper.toEntity(bankAccount);
+            accounts.put(bankAccountEntity.getId(), bankAccountEntity);
+        }
+        else {
+            throw new IllegalArgumentException("No such account!");
+        }
     }
 }
