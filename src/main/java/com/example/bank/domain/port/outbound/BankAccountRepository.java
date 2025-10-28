@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface BankAccountRepository { //Outbound port for the database
 
-    BankAccount findAccountById(long id);
+    Optional<BankAccount> findAccountById(long id);
 
     void createAccount(BankAccount bankAccount);
 

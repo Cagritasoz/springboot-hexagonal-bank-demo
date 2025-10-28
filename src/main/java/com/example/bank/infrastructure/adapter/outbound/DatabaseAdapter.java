@@ -22,14 +22,14 @@ public class DatabaseAdapter implements BankAccountRepository {
     }
 
     @Override
-    public BankAccount findAccountById(long id) {
+    public Optional<BankAccount> findAccountById(long id) {
         BankAccountEntity bankAccountEntity = accounts.get(id);
 
         if(bankAccountEntity == null) {
-            return null;
+            return Optional.empty();
         }
 
-        return bankAccountMapper.toDomain(bankAccountEntity);
+        return Optional.of(bankAccountMapper.toDomain(bankAccountEntity));
 
     }
 

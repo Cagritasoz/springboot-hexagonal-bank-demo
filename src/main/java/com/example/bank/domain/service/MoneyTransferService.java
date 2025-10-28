@@ -17,14 +17,13 @@ public class MoneyTransferService implements MoneyTransferUseCase {
 
     @Override
     public void transferMoney(long senderId, long receiverId, double amount) {
-        BankAccount senderAccount = bankAccountRepository.findAccountById(senderId);
-        BankAccount receiverAccount = bankAccountRepository.findAccountById(receiverId);
-        if(senderAccount == null) {
-            throw new IllegalArgumentException("Sender account does not exist!");
-        }
-        if(receiverAccount == null) {
-            throw new IllegalArgumentException("Receiver account does not exist!");
-        }
+
+        BankAccount senderAccount = bankAccountRepository.findAccountById(senderId).orElseThrow(()->
+                new IllegalArgumentException("Sender account does not exist!") );
+        
+        BankAccount receiverAccount = bankAccountRepository.findAccountById(receiverId).orElseThrow(()->
+                new IllegalArgumentException("Receiver account does not exist!"));
+
         if(senderAccount.getBalance() < amount) {
             throw new IllegalArgumentException("Sender balance missing funds: " + (amount-senderAccount.getBalance()));
         }
