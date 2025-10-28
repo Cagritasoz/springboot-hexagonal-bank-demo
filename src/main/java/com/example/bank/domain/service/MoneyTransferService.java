@@ -20,7 +20,7 @@ public class MoneyTransferService implements MoneyTransferUseCase {
 
         BankAccount senderAccount = bankAccountRepository.findAccountById(senderId).orElseThrow(()->
                 new IllegalArgumentException("Sender account does not exist!") );
-        
+
         BankAccount receiverAccount = bankAccountRepository.findAccountById(receiverId).orElseThrow(()->
                 new IllegalArgumentException("Receiver account does not exist!"));
 

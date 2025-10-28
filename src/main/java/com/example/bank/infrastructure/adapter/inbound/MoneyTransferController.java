@@ -15,10 +15,10 @@ public class MoneyTransferController {
         this.moneyTransferUseCase = moneyTransferUseCase; //example of Dependency Injection
     }
 
-    @PostMapping("/transfer")
+    @PostMapping("/transfer") //PostMapping says handle POST requests
     public void transferMoney(@RequestParam long senderId,
                               @RequestParam long receiverId,
-                              @RequestParam double amount) {
+                              @RequestParam double amount) { //RequestParam says have these parameters when sending a request
         try {
             moneyTransferUseCase.transferMoney(senderId,receiverId,amount);
             System.out.println("Transfer successfully completed!");
