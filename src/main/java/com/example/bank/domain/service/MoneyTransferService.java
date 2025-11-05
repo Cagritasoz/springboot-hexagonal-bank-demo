@@ -1,10 +1,11 @@
 package com.example.bank.domain.service;
 
-
 import com.example.bank.domain.model.BankAccount;
 import com.example.bank.domain.port.inbound.MoneyTransferUseCase;
 import com.example.bank.domain.port.outbound.BankAccountRepository;
 import org.springframework.stereotype.Service;
+
+//Service implementation
 
 @Service
 public class MoneyTransferService implements MoneyTransferUseCase {

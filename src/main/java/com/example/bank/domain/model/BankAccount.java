@@ -1,6 +1,8 @@
 package com.example.bank.domain.model;
 
-public class BankAccount { //domain entity
+//domain entity
+
+public class BankAccount {
 
     private long id;
     private String accountHolder;
